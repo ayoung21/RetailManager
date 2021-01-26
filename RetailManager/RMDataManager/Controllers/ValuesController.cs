@@ -4,6 +4,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+// Adding
+using Microsoft.AspNet.Identity;
 
 namespace RMDataManager.Controllers
 {
@@ -11,10 +13,21 @@ namespace RMDataManager.Controllers
     public class ValuesController : ApiController
     {
         // GET api/values
+        
         public IEnumerable<string> Get()
         {
-            return new string[] { "value1", "value2" };
+            string userId = RequestContext.Principal.Identity.GetUserId();
+            return new string[] { "value1", "value2", userId };
         }
+        
+        /*
+        public IHttpActionResult Get()
+        {
+            string userId = RequestContext.Principal.Identity.GetUserId();
+            // can return back not found, exception, bad request, redirect, etc.
+            return Ok(new string[] { "value1", "value2", userId });
+        }
+        */
 
         // GET api/values/5
         public string Get(int id)
